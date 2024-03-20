@@ -1,0 +1,1505 @@
+﻿@model List<Demo_Web_Application.Models.StudentDto>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Display All Records </title>
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font_awesome/4.7.0/css/fontawesome.min.css">
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid" id="studentdetail-container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h1 style="text-align:center;"> Display All Records </h1>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th> Student Id </th>
+                        <th> Student Name</th>
+                        <th> Father Name</th>
+                        <th> DOB </th>
+                        <th> Gender</th>
+                        <th> Mobile Number </th>
+                        <th> Email </th>
+                        <th> Country </th>
+                        <th> State </th>
+                        <th> City </th>
+                        <th> Locality </th>
+                        <th> Address </th>
+                        <th> PinCode </th>
+                        <th> Photograph </th>
+                        <th> Signature </th>
+                        <th> Edit </th>
+                        <th> Delete </th>
+                    </tr>
+                    @{
+
+                        foreach (var X in Model)
+                        {
+                                        <tr>
+                                            <td>@X.StudentId</td>
+                                            <td>@X.StuName</td>
+                                            <td>@X.FName</td>
+                                            <td>@X.DOB</td>
+                                            <td>@X.Gender</td>
+                                            <td>@X.Mobile</td>
+                                            <td>@X.StuEmail</td>
+                                            <td>@X.Country</td>
+                                            <td>@X.State</td>
+                                            <td>@X.City</td>
+                                            <td>@X.Locality</td>
+                                            <td>@X.Address</td>
+                                            <td>@X.PinCode</td>
+                                            <td>
+                                                <img src="~/Content/Profile/@X.Photo" height="50" width="50" />
+                                            </td>
+                                            
+                                            <td>
+                                                <img src="~/Content/Signature/@X.Signature" height="50" width="50" />
+                                            </td>
+                                            <td>
+                                                <a href="~/Student/NewRegistrationForm/@X.StudentId">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                    <span class="fa fa-edit" style="color:blue; font-size:30px;"></span>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a onclick="deleteStudentData('@X.StudentId')">
+                                                    <i class="bi bi-trash3"></i>
+                                                    <span class="fa fa-trash" style="color:#FA8072;font-size:30px;"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    function deleteStudentData(ID) {
+        var msg = confirm("Are you sure to delete this student record ?");
+        if (msg == true) {
+            $.ajax({
+                url: "/Student/DeleteStudentRecord",
+                type: "GET",
+                data: { Id: ID },
+                //success: function (data) {
+                //    refreshGrid('studentdetail-container');
+                //}
+            });
+        }
+    };
+</script>
+
+<!--<title>Display all Records</title>
+
+<div class="container" id="printcontainorLandlord">
+    <div class="row">
+
+        <div class="col-md-12" style="border:1px solid;">
+            <div class="row">
+                <button class="btn btn-primary pull-right" id="cancelPrint" onclick="cancelPrint();"><i class="fa fa-times" aria-hidden="true"></i> Back to Home </button>
+            </div>
+            <p class="moduleheading">
+                Student Information
+            </p>
+            <p class="subheading"> Project Information</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Project Manager</th>
+                        <th>Store #</th>
+                        <th>Sq. Ft.</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ProjectName</td>
+                        <td>
+
+                            ProjectManagerName
+
+                        </td>
+                        <td>StoreNumber</td>
+                        <td>StoreSquareFeet</td>
+                        <td>
+                            StoreNumber
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>Phone #</th>
+                        <th>Fax #</th>
+                        <th>Space #</th>
+                        <th>Level</th>
+                        <th>Union Status</th>
+                        <th>Start Date</th>
+                        <th>Turnover Date</th>
+                        <th>Punch Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ProjectPhoneNu</td>
+                        <td>ProjectFaxNumber</td>
+                        <td>ProjectSpaceNumber</td>
+                        <td>ProjectLevel</td>
+                        <td>UnionStatus</td>
+                        <td>DisplayStartDate  </td>
+                        <td>DisplayTurnoverDate</td>
+                        <td>DisplayPunchDate</td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Superindendent(s)</p>
+            <table class="table table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>SuperIntendent 1</th>
+                        <th>Phone #</th>
+                        <th>SuperIntendent 2</th>
+                        <th>Phone #</th>
+                        <th>SuperIntendent 3</th>
+                        <th>Phone #</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfohone1</td>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfohone2</td>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfohone3</td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Subs / Plans</p>
+            <table class="table table-bordered table-striped">
+
+                <thead>
+                    <tr>
+                        <th>Sub Due Date</th>
+                        <th>Plans Received On</th>
+                        <th>Plan Sent On</th>
+                        <th>Owner Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DisplaySubDueDate</td>
+                        <td>DisplayPlansReceivedDate</td>
+                        <td>DisplayPlansSentDate</td>
+                        <td>DisplayOwnerDueDate</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Mall Overview</p>
+            <table class="table table-striped table-bordered">
+
+                <thead>
+                    <tr>
+                        <th>Mall Name</th>
+                        <th>Mall Pack</th>
+                        <th>Mall Manager</th>
+                        <th>E-Mail</th>
+                        <th>Operations Manager</th>
+                        <th>E-Mail</th>
+                        <th>Electronic Copy Saved to File ?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfo</td>
+                        <td>LandlordInfo</td>
+                        <td>
+                            LandlordInfo
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="border:1px solid;">
+            <p class="moduleheading">
+                Mall Deposit Information
+            </p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Security </th>
+                        <th>Amount $</th>
+                        <th>Payable To</th>
+                        <th>Deposit Method</th>
+                        <th>Deposit Released To</th>
+                        <th>Attention To Name</th>
+                        <th>E-mail</th>
+                        <th>Union Status</th>
+                        <th>Notes</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            MallDeposit
+                        </td>
+                        <td>MallDeposit</td>
+                        <td>MallDeposit</td>
+                        <td>MallDeposit</td>
+                        <td>MallDeposit</td>
+                        <td>MallDeposit</td>
+                        <td>MallDeposit</td>
+                        <td>MallDeposit</td>
+                        <td>MallDeposit</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="border:1px solid;">
+            <p class="moduleheading">
+                Property Owner
+            </p>
+            <p class="subheading">Company Information</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zip Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+
+                                PropertyOwners
+
+                        </td>
+                        <td>
+                            PropertyOwners
+                        </td>
+                        <td>
+                              PropertyOwners
+
+                        </td>
+                        <td>
+                            PropertyOwners
+                        </td>
+                        <td>
+                            PropertyOwners
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Contact Information</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Fax</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PropertyOwners.ContactName</td>
+                        <td>PropertyOwners.ContactPhone</td>
+                        <td>PropertyOwners.ContactFax</td>
+                        <td>PropertyOwners.ContactEmail</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="border:1px solid;">
+            <p class="moduleheading">
+                Insurance Requirements
+            </p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Certificate Holder</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zip</th>
+                        <th>Additional Insured</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LandlordInsurance</td>
+                        <td>LandlordInsurance</td>
+                        <td>LandlordInsurance.City</td>
+                        <td>
+                           LandlordInsurance
+                        </td>
+                        <td>LandlordInsurance</td>
+                        <td>LandlordInsurance</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="border:1px solid;">
+            <p class="moduleheading">
+                Space Details
+            </p>
+            <p class="subheading">Details</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Has Elevator?</th>
+                        <th>Has Dock?</th>
+                        <th>Is Asbestos Free?</th>
+                        <th>Has Additional Storage?</th>
+                        <th>NewSpace??</th>
+                        <th>IsRemodel?</th>
+                        <th>Has Slab?</th>
+                        <th>Slab Responsibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            SpaceInformationr
+                        </td>
+                        <td>
+                            SpaceInformation
+                        </td>
+                        <td>
+                            SpaceInformati
+                        </td>
+                        <td>
+                            SpaceInformati
+                        </td>
+                        <td>
+                            SpaceInformation
+                        </td>
+                        <td>
+                            SpaceInformation
+                        </td>
+                        <td>
+                            SpaceInformation
+                        </td>
+                        <td>SpaceInformationy</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Has Leave Out Portions?</th>
+                        <th>All Services Stubbed In ?</th>
+                        <th>Services Not Stubbed In</th>
+                        <th>Is Temp Service Required?</th>
+                        <th>Landlord Provided?</th>
+                        <th>GC Provided?</th>
+                        <th>Service Fees</th>
+                        <th>Existing Tenant Name</th>
+                        <th>Date Space-Available</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+
+                            SeaveOutPortions
+                        </td>
+                        <td>
+                            SllServicesStubbedIn
+                        </td>
+                        <td>SStubbedIn</td>
+                        <td>
+                            SmpServiceRequired
+                        </td>
+                        <td>
+                            SLandlordPayFees
+                        </td>
+                        <td>
+                            SyFees
+                        </td>
+                        <td>SFees</td>
+                        <td>SantName</td>
+                        <td>SSpaceAvailable </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="subheading">Site Visit Information</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Available For Visit ?</th>
+                        <th>Contact Name For Visit</th>
+                        <th>Phone # to Schedule</th>
+                        <th>E-mail</th>
+                        <th>Back Door Leads To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            IsAvailableFor
+                        </td>
+                        <td>NameForVisit</td>
+                        <td>PhoneNumber</td>
+                        <td>fddfdf<td>
+                        <td>rLeadsTo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="border:1px solid;">
+            <p class="moduleheading">
+                Lease Status
+            </p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Lease Has Been <th>
+                        <th>Plan Submitted d</th>
+                        <th>Plan Approved b</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            aseBeenExecuted
+                        </td>
+                        <td>
+                            isplayIsPlanSubmittedToLL
+                        </td>
+                        <td>
+                           layIsPlanApprovedByLL
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12" style="border:1px solid;">
+            <p class="moduleheading">
+                Mall Requirements
+            </p>
+            <p class="subheading">Sprinkler</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name #1</th>
+                        <th>Phone Number #1</th>
+                        <th>E-mail #1</th>
+                        <th>Shutdown Fee #1</th>
+                        <th>Sprinkler Notes #1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>prinklerCompany</td>
+                        <td>prinklerPhone</td>
+                        <td>prinklerEmail</td>
+                        <td>prinklerShu </td>
+                        <td>prinklerNotes</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name #2</th>
+                        <th>Phone Number #2</th>
+                        <th>E-mail #2</th>
+                        <th>Shutdown Fee #2</th>
+                        <th>Sprinkler Notes #2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>lerCompany2</td>
+                        <td>lerPhone2</td>
+                        <td>leremail2</td>
+                        <td>lerShutdownfee</td>
+                        <td>lerNotes2</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name #3</th>
+                        <th>Phone Number #3</th>
+                        <th>E-mail #3</th>
+                        <th>Shutdown Fee #3</th>
+                        <th>Sprinkler Notes #3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>nklerCompany3</td>
+                        <td>nklerPhone3</td>
+                        <td>nklerEmail3</td>
+                        <td>nklershutdownfee3</td>
+                        <td>nklerNotes3</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Roofing</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Phone #</th>
+                        <th>E-mail</th>
+                        <th>Roofing Notes</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RoofingCompany</td>
+                        <td>RoofingPhone</td>
+                        <td>Roofingemail</td>
+                        <td>RoofingNotes</td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Fire Alarm</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Phone #</th>
+                        <th>E-mail</th>
+                        <th>Fire Alarm Notes</th>
+                        <th>Tied to Mall</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FireAlarmCompany</td>
+                        <td>FirePhone</td>
+                        <td>FireEmail</td>
+                        <td>FireAlarmNotes</td>
+                        <td>
+                            DisplayIsFirel
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Common Area</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Tile Source</th>
+                        <th>Tile Cost</th>
+                        <th>Parking </th>
+                        <th>Parking Permits Fee</th>
+                        <th>Security Permits Required</th>
+                        <th>Security Badges Fee</th>
+                        <th>Permit Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ommonAreaTileSource</td>
+                        <td>ommonAreaTileCost</td>
+                        <td>
+                            isplayParki
+                        </td>
+                        <td>arkingPermitsFee</td>
+                        <td>
+                            isplaySecurity
+                        </td>
+                        <td>ecurityBadgesFee</td>
+                        <td>oCurrencyFormat()</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Barricade</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Phone #</th>
+                        <th>E-mail</th>
+                        <th>Requirements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>icadeCompany</td>
+                        <td>icadePhone</td>
+                        <td>icadeEmail</td>
+                        <td>icadeRequirements</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Dumpster</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Company Name</th>
+                        <th>Phone #</th>
+                        <th>E-mail</th>
+                        <th>Location</th>
+                        <th>Permit Cost</th>
+                        <th>Pad Rental Fee</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>psterCompany</td>
+                        <td>psterPhone</td>
+                        <td>pterEmail</td>
+                        <td>psterLocation</td>
+                        <td>kingPermitCos</td>
+                        <td>RentalFee</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="subheading">Misc.</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Sub List Available</th>
+                        <th>Additional Contractors</th>
+                        <th>Special Requirements</th>
+                        <th>Additional Fees</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                           DisplayIsSubListAvailable
+                        </td>
+                        <td>AdditionalContractors</td>
+                        <td>SpecialRequirements</td>
+                        <td>AdditionalFees</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+@*<div class="col-md-12" style="border:1px solid;">
+        <p class="moduleheading">
+            Local Utilities
+        </p>
+
+        <p class="subheading">Local Utilities</p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Electric Company Name</th>
+                    <th>Electric Company Phone #</th>
+                    <th>Water / Sewer Company Name</th>
+                    <th>Water / Sewer Company Phone #</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@LocalUtilityContact.ElectricCompany</td>
+                    <td>@LocalUtilityContact.ElectricPhone</td>
+                    <td>@LocalUtilityContact.WaterSewerCompany</td>
+                    <td>@LocalUtilityContact.WaterSewerPhone</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Gas Company Name</th>
+                    <th>Gas Company Phone #</th>
+                    <th>Telephone Company Name</th>
+                    <th>Telephone Company Phone #</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>@LocalUtilityContact.GasCompany</td>
+                    <td>@LocalUtilityContact.GasPhone</td>
+                    <td>@LocalUtilityContact.TelephoneCompany</td>
+                    <td>@LocalUtilityContact.TelephonePhone</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+@*<div class="col-md-12" style="border:1px solid;">
+        <p class="moduleheading">
+            Building Dept. Information
+        </p>
+        <p class="subheading">Department Details</p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Departmant Name</th>
+                    <th>Contact Date</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip Code</th>
+                    <th>Phone #</th>
+                    <th>Fax #</th>
+                    <th>Website</th>
+                    <th>Hours</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@BuildingDepartmentInformation.DepartmentName</td>
+                    <td>@BuildingDepartmentInformation.DisplayDepartmentDate </td>
+                    <td>@BuildingDepartmentInformation.DisplayAddress</td>
+                    <td>@BuildingDepartmentInformation.City</td>
+                    <td>
+                        @if (BuildingDepartmentInformation.State1.StateName != null)
+                        {@BuildingDepartmentInformation.State1.StateName}
+                    </td>
+                    <td>@BuildingDepartmentInformation.ZIP</td>
+                    <td>@BuildingDepartmentInformation.Phone</td>
+                    <td>@BuildingDepartmentInformation.Fax</td>
+                    <td>@BuildingDepartmentInformation.Website</td>
+                    <td>@BuildingDepartmentInformation.Hours</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="subheading">Permit Tech / Contact</p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Technician Name</th>
+                    <th>E-mail</th>
+                    <th>Inspection Hotline</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@BuildingDepartmentInformation.PermitTechnician</td>
+                    <td>@BuildingDepartmentInformation.TechnicianEmail</td>
+                    <td>@BuildingDepartmentInformation.InspectionHotlineNumber</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+@*<div class="col-md-12" style="border:1px solid;">
+        <p class="moduleheading">
+            Plan Review
+        </p>
+        <p class="subheading">TDS Managing Plans</p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Set of Drawings</th>
+                    <th>Time Frame</th>
+                    <th>Date Submitted</th>
+                    <th>Review #</th>
+                    <th>Drawings must be stamped & sealed by state architect</th>
+                    <th>Drawings can be mailed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@PlanReviewSubmittal.DrawingSetsForPlanReview</td>
+                    <td>@PlanReviewSubmittal.TimeFrameForPlanReview</td>
+                    <td>@PlanReviewSubmittal.DisplayDateDrawingsSubmitted</td>
+                    <td>@PlanReviewSubmittal.PlanReviewNumber</td>
+                    <td>@PlanReviewSubmittal.DisplayDrawingsRequireSeal</td>
+                    <td>@PlanReviewSubmittal.DisplayDrawingsCanBeMailed</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Drawings can be walked through</th>
+                    <th>Landlord Approval Required</th>
+                    <th>Subs must be listed on permit</th>
+                    <th>Legal description of property required</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@PlanReviewSubmittal.DisplayDrawingsCanBeWalkedThrough</td>
+                    <td>@PlanReviewSubmittal.DisplayIsLLApprovalRequired</td>
+                    <td>@PlanReviewSubmittal.DisplaySubsMustBeListedOnPermit</td>
+                    <td>@PlanReviewSubmittal.DisplayIsLegalDescOfPropertyRequired</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+
+                    <th>Review Fee Required (leave unchecked if covered by permit)</th>
+                    <th>Review Fee</th>
+                    <th>Expedite Available</th>
+                    <th>Expedite Fee</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+
+                    <td>@PlanReviewSubmittal.DisplayIsReviewFeeRequired</td>
+                    <td>@PlanReviewSubmittal.ReviewFee.ToCurrencyFormat()</td>
+                    <td>@PlanReviewSubmittal.DisplayIsExpeditingAvailable</td>
+                    <td>@PlanReviewSubmittal.ExpediteFee.ToCurrencyFormat()</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="subheading">3rd Party Managing Plans</p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Permit Expeditor</th>
+                    <th>Expeditor Phone</th>
+                    <th>Address</th>
+                    <th>Permit Ready</th>
+                    <th>Permit #</th>
+                    <th>Outstanding permit fees</th>
+                    <th>Fee Basis (e.g.,sq.ft)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@PlanReviewSubmittal.PermitExpeditor</td>
+                    <td>@PlanReviewSubmittal.ExpeditorPhone</td>
+                    <td>@PlanReviewSubmittal.DisplayAddress</td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayIsPermitReady
+                    </td>
+                    <td>@PlanReviewSubmittal.PermitNumber</td>
+                    <td>@PlanReviewSubmittal.OutstandingPermitFee.ToCurrencyFormat()</td>
+                    <td>@PlanReviewSubmittal.BasisOfOutstandingFee</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>MEP permit included with building permit</th>
+                    <th>MEP fees included with building fees</th>
+                    <th>Subcontractor List Required</th>
+                    <th>Low voltage permits issued separately</th>
+                    <th>Merchandising permit required</th>
+                    <th>Merchandising permit fee required</th>
+                    <th>Merchandising / Stock Fee</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @PlanReviewSubmittal.DisplayAreMEPIncludingWithBuilding
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayAreMEPFeesIncludedWithBuilding
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayIsSubListRequired
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayIsLowVoltagePermitSeparate
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayIsMerchandisingPermitRequired
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayIsMerchandisingPermitRequired
+                    </td>
+                    <td>@PlanReviewSubmittal.MerchandisingPermitFee.ToCurrencyFormat()</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Early start permit fee available</th>
+                    <th>Early start permit is over the counter</th>
+                    <th>Early start permit fee</th>
+                    <th>Notice of commencement required</th>
+                    <th>Inspection fee Required</th>
+                    <th>Inspection Fee</th>
+                    <th>Additional requirements</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@PlanReviewSubmittal.DisplayIsEarlyStartPermitAvailable</td>
+                    <td>@PlanReviewSubmittal.DisplayIsEarlyStartPermitOverTheCounter</td>
+                    <td>@PlanReviewSubmittal.EarlyStartPermitFee.ToCurrencyFormat()</td>
+                    <td>@PlanReviewSubmittal.DisplayIsNoticeOfCommencementRequired</td>
+                    <td>@PlanReviewSubmittal.DisplayIsInspectionFeeRequired </td>
+                    <td>@PlanReviewSubmittal.InspectionFee.ToCurrencyFormat()</td>
+                    <td>@PlanReviewSubmittal.ExtraPermitRequirements</td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="subheading">Building Department Requirements</p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Notice of commencement required</th>
+                    <th>Authorize Agent Form</th>
+                    <th>Certificate of Insurance</th>
+                    <th>Power Of Attorney</th>
+                    <th>To Whom</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @PlanReviewSubmittal.DisplayNoticeOfCommencementRequired
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayAuthorizeAgentForm
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayCommencementOfInsurance
+                    </td>
+                    <td>
+                        @PlanReviewSubmittal.DisplayPowerOfAttorney
+                    </td>
+                    <td>@PlanReviewSubmittal.ToWhom</td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+@*<div class="col-md-12" style="border:1px solid;">
+        <p class="moduleheading">
+            Licensing
+        </p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Contact Name</th>
+                    <th>Phone #</th>
+                    <th>Registration Required</th>
+                    <th>Fax #</th>
+                    <th>How to Obtain Forms</th>
+                    <th>Documentation</th>
+                    <th>Registration can be faxed</th>
+                    <th>Registration fee required</th>
+                    <th>Registration Fee</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Licensing.ContactName</td>
+                    <td>@Licensing.Phone</td>
+                    <td>
+                        @Licensing.DisplayIsRegistrationRequired
+                    </td>
+                    <td>@Licensing.Fax</td>
+                    <td>@Licensing.FormObtainmentMethod</td>
+                    <td>@Licensing.DocumentationRequirements</td>
+                    <td>
+                        @Licensing.DisplayCanRegistrationBeFaxed
+                    </td>
+                    <td>
+                        @Licensing.IsFaxFee
+                    </td>
+                    <td>@Licensing.FaxFee</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Certificate of insurance required</th>
+                    <th>Insurance Holder</th>
+                    <th>Additional Insured</th>
+                    <th>Bond Required</th>
+                    <th>Bond Amount</th>
+                    <th>Bond Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Licensing.DisplayIsCertOfInsuranceRequired
+                    </td>
+                    <td>@Licensing.CertOfInsuranceHolder</td>
+                    <td>@Licensing.AdditionalInsured</td>
+                    <td>
+                        @Licensing.DisplayIsBondRequired
+                    </td>
+                    <td>@Licensing.BondAmount.ToCurrencyFormat()</td>
+                    <td>@Licensing.BondType</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Power of Attorney required</th>
+                    <th>Building Dept. Power of Attorney Form Required</th>
+                    <th>Notarized</th>
+                    <th>Authorization Letter Required</th>
+                    <th>Notarized</th>
+                    <th>Additional Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Licensing.DisplayIsPowerOfAttorneyRequired
+                    </td>
+                    <td>
+                        @Licensing.DisplayBuildingDeptPOAFormRequired
+                    </td>
+                    <td>
+                        @Licensing.DisplayBuildingDeptPOAFormNotarized
+                    </td>
+                    <td>
+                        @Licensing.DisplayAuthorizationLetterRequired
+                    </td>
+                    <td>
+                        @Licensing.DisplayAuthorizationLetterNotarized
+                    </td>
+                    <td>@Licensing.AdditionalNotes</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+<!--<div class="col-md-12" style="border:1px solid;">
+    <p class="moduleheading">
+        Architects/ Engineers
+    </p>
+    <p class="subheading">Company Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>ZIP Code</th>
+                <th>Phone #</th>
+                <th>Fax</th>
+                <th>Website</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CompanyName</td>
+                <td>DisplayAddress</td>
+                <td>City</td>
+                <td>
+                    eer.State1
+                    .State1.StateName}
+                </td>
+                <td>ZIP</td>
+                <td>Phone</td>
+                <td>Fax</td>
+                <td>Website</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Contact #1 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Contact1Name</td>
+                <td>Contact1Title</td>
+                <td>Contact1Phone</td>
+                <td>Contact1Email</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Contact #2 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Contact2Name</td>
+                <td>Contact2Title</td>
+                <td>Contact2Phone</td>
+                <td>Contact2Email</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Contact #3 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Contact3Name</td>
+                <td>Contact3Title</td>
+                <td>Contact3Phone</td>
+                <td>Contact3Email</td>
+            </tr>
+        </tbody>
+    </table>-->
+<!-- Company 2-->
+<!--<p class="subheading">Company 2 Information</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Company Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>ZIP Code</th>
+            <th>Phone #</th>
+            <th>Fax</th>
+            <th>Website</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ompany2Name</td>
+            <td>ompany2DisplayAddress</td>
+            <td>ompany2City</td>
+            <td>
+                ompany2StateName
+            </td>
+            <td>ompany2ZIP</td>
+            <td>ompany2Phone</td>
+            <td>ompany2Fax</td>
+            <td>ompany2Website</td>
+        </tr>
+    </tbody>
+</table>
+<p class="subheading">Contact #1 Information</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone #</th>
+            <th>E-mail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ompany2Contact1Name</td>
+            <td>ompany2Contact1Title</td>
+            <td>ompany2Contact1Phone</td>
+            <td>ompany2Contact1Email</td>
+        </tr>
+    </tbody>
+</table>
+<p class="subheading">Contact #2 Information</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone #</th>
+            <th>E-mail</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ompany2Contact2Name</td>
+            <td>ompany2Contact2Title</td>
+            <td>ompany2Contact2Phone</td>
+            <td>ompany2Contact2Email</td>
+
+        </tr>
+    </tbody>
+</table>
+<p class="subheading">Contact #3 Information</p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Title</th>
+            <th>Phone #</th>
+            <th>E-mail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>pany2Contact3Name</td>
+            <td>pany2Contact3Title</td>
+            <td>pany2Contact3Phone</td>
+            <td>pany2Contact3Email</td>
+        </tr>
+    </tbody>
+</table>-->
+<!-- Company 3 -->
+<!--<p class="subheading">Company 2 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>ZIP Code</th>
+                <th>Phone #</th>
+                <th>Fax</th>
+                <th>Website</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>mpany3Name</td>
+                <td>mpany3DisplayAddress</td>
+                <td>mpany3City</td>
+                <td>
+                    mpany3StateName
+                </td>
+                <td>mpany3ZIP</td>
+                <td>mpany3Phone</td>
+                <td>mpany3Fax</td>
+                <td>mpany3Website</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Contact #1 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ny3Contact1Name</td>
+                <td>ny3Contact1Title</td>
+                <td>ny3Contact1Phone</td>
+                <td>ny3Contact1Email</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Contact #2 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>mpany3Contact2Name</td>
+                <td>mpany3Contact2Title</td>
+                <td>mpany3Contact2Phone</td>
+                <td>mpany3Contact2Email</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Contact #3 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Company3Contact3Name</td>
+                <td>Company3Contact3Title</td>
+                <td>Company3Contact3Phone</td>
+                <td>Company3Contact3Email</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-md-12" style="border:1px solid;">
+    <p class="moduleheading">
+        Client
+    </p>
+    <p class="subheading">Client Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Company Name</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State</th>
+                <th>ZIP Code</th>
+                <th>Phone #</th>
+                <th>Fax</th>
+                <th>Website</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>er.CompanyName</td>
+                <td>er.DisplayAddress</td>
+                <td>er.City</td>
+                <td>
+                    (Owner.State.StateName != null)
+                    ner.State.StateName}
+                </td>
+                <td>er.ZIP</td>
+                <td>er.Phone</td>
+                <td>er.Fax</td>
+                <td>er.Website</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Company #1 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>act1Name</td>
+                <td>act1Title</td>
+                <td>act1Phone</td>
+                <td>act1Email</td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Company #2 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Contact2Name</td>
+                <td>Contact2Title</td>
+                <td>Contact2Phone</td>
+                <td>Contact2Email</td>
+
+            </tr>
+        </tbody>
+    </table>
+    <p class="subheading">Company #3 Information</p>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Phone #</th>
+                <th>E-mail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ntact3Name</td>
+                <td>ntact3Title</td>
+                <td>ntact3Phone</td>
+                <td>ntact3Email</td>
+            </tr>
+        </tbody>
+    </table>-->
+<!--</div>-->
+<!--</div>
+    <div class="col-md-offset-5 buttonsofprint">
+        <button class="btn btn-primary" onclick="LandlordPrintButton();" id="printbtn"><i class="fa fa-print" aria-hidden="true"></i> Print</button>
+
+        <br />
+        <br />
+
+    </div>
+</div>
+<script src="~/Scripts/View/Bid.js"></script>
+<script src="~/Scripts/jquery-v1.9.1.min.js"></script>
+<style type="text/css">
+    #printcontainorLandlord table th {
+        font-size: 14px;
+    }
+
+    #printcontainorLandlord table td {
+        font-size: 13px;
+    }
+</style>
+<script>
+    function LandlordPrintButton() {
+        window.print('#printcontainorLandlord');
+
+    }
+    function closeWinLandlord() {
+
+        window.close();
+
+    }
+</script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" media="print" href="~/Content/PrintPage.css">
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/Custom.css" rel="stylesheet" />-->

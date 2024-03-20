@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aeee4b5122b14c51a17d79cb18d38256" Name="Diagram1">
+        <EntityTypeShape EntityType="Demo_DBModel.Course" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="Demo_DBModel.Instructor" Width="1.5" PointX="0.75" PointY="15.125" />
+        <EntityTypeShape EntityType="Demo_DBModel.Schedule" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="Demo_DBModel.Subject" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Demo_DBModel.Transaction" Width="1.5" PointX="3" PointY="7.875" />
+        <AssociationConnector Association="Demo_DBModel.FK_Schedules_Course" />
+        <AssociationConnector Association="Demo_DBModel.FK_Subjects_Course" />
+        <AssociationConnector Association="Demo_DBModel.FK_Schedules_Instructor" />
+        <AssociationConnector Association="Demo_DBModel.FK_Schedules_Subjects" />
+        <EntityTypeShape EntityType="Demo_DBModel.Student" Width="1.5" PointX="0.75" PointY="3.125" />
+        <AssociationConnector Association="Demo_DBModel.FK_Schedules_Student" />
+        <AssociationConnector Association="Demo_DBModel.FK_Transactions_Student" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

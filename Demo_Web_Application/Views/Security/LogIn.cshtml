@@ -1,0 +1,83 @@
+﻿
+
+@{
+    ViewBag.Title = "LogIn";
+}
+
+<html>
+<head>
+    <script>
+    <!-- Latest compiled and minified CSS-- >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </script>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-v1.9.1.min.js"></script>
+
+</head>
+<body>
+    <section class="vh-100" style="background-color: #508bfc;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 50px;">
+                        <div class="card-body p-5 text-center">
+
+                            <h3 class="mb-5">Sign in</h3>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="Useridentity" style="margin-right:100%;">Users</label>
+                                <select class="form-select" id="Useridentity">
+                                    <option value="--Select Authentication--">--Select Authentication--</option>
+                                    <option value="Admin" href="#">Admin</option>
+                                    <option value="Student" href="#">Student</option>
+                                    <option value="Instructor" href="#">Instructor</option>
+                                </select>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="emailid" style="margin-right:100%;">Email</label>
+                                <input type="email" id="emailid" class="form-control form-control-lg" />
+
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="pwd" style="margin-right:100%;">Password</label>
+                                <input type="password" id="pwd" class="form-control form-control-lg" />
+
+                            </div>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-start mb-4">
+                                <input class="form-check-input" type="checkbox" value="" id="form1Example3" /> &nbsp;
+                                <label class="form-check-label" for="form1Example3"> Remember password </label>
+                            </div>
+
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+                            @*<hr class="my-4">
+
+                                <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;"
+                                        type="submit">
+                                    <i class="fab fa-google me-2"></i> Sign in with google
+                                </button>
+                                <br />
+                                <br />
+                                <button class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998;"
+                                        type="submit">
+                                    <i class="fab fa-facebook-f me-2"></i>Sign in with facebook
+                                </button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
